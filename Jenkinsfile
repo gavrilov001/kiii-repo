@@ -5,8 +5,13 @@ node {
         checkout scm
     }
 
+    stage('Check files') {
+        sh 'pwd'
+        sh 'ls -l'
+    }
+
     stage('Build image') {
-        app = docker.build("vlatko001/kii")  
+        app = docker.build("vlatko001/kii", "${env.WORKSPACE}")
     }
 
     stage('Push image') {

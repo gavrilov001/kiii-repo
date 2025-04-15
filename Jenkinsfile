@@ -1,22 +1,18 @@
-Jenkinsfile (Declarative Pipeline)
-pipeline {
-    agent any
+node {
+    def app
 
-    stages {
-        stage('Build') {
-            steps {
-                echo 'Building..'
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-            }
+    stage('Clone repository') {
+        checkout scm
+    }
+
+    stage('Build image') {
+        app = docker.build("vlatko001/kii")  
+    }
+
+    stage('Push image') {
+        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+            app.push("${env.BRANCH_NAME}-${env.BUILD_NUMBER}")
+            app.push("${env.BRANCH_NAME}-latest")
         }
     }
 }

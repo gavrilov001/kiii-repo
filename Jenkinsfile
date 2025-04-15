@@ -6,7 +6,7 @@ node {
     }
 
     stage('Build image') {
-        app = docker.build("vlatko001/kii")  
+        app = docker.build("vlatko001/kii", "${env.WORKSPACE}")
     }
 
     stage('Push image') {

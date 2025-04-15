@@ -1,15 +1,3 @@
-pipeline {
-    agent any
-    stages {
-        stage('Build image') {
-            steps {
-                dir("${WORKSPACE}") {
-                    sh 'docker build -t vlatko001/kii .'
-                }
-            }
-        }
-    }
-}
 node {
     def app
 
